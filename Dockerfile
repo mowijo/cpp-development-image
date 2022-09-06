@@ -1,18 +1,21 @@
-FROM debian:bookworm
+FROM alpine:3.16.2
 
-RUN apt-get update
-RUN apt-get install -y\
-    build-essential \
-    cmake \
-    git \
-    autotools-dev \
-    automake libtool \
-    m4 \
-    libssl-dev\ 
-    wget\
-    zlib1g-dev\
-    ninja-build \
-    clang-format
+RUN apk update
+RUN apk add --no-cache \
+	g++ \
+	ninja \
+	cmake \
+	m4 \
+	git \
+	wget \
+	autoconf \
+	automake \
+	libtool \
+	zlib-dev \
+	clang-extra-tools \
+	bash \
+	make \
+	curl
 
 RUN ( \
     cd /tmp && \
@@ -26,4 +29,4 @@ RUN ( \
     rm -rf /tmp/googletest \
 )
 
-RUN ldconfig
+RUN ldconfig /etc/ld.so.conf.d
